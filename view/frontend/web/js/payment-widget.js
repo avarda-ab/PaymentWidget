@@ -5,6 +5,8 @@ define([
     'use strict';
 
     return Component.extend({
+        jwtWidgetUrl: '',
+        customStyles: '',
         widgetJwtData: false,
         initialize: function () {
             this._super();
@@ -33,6 +35,7 @@ define([
             s.async = true;
             s.dataset.paymentId = this.widgetJwtData().paymentId;
             s.dataset.widgetJwt = this.widgetJwtData().widgetJwt;
+            s.dataset.customStyles = this.customStyles;
             document.head.appendChild(s);
         }
     });

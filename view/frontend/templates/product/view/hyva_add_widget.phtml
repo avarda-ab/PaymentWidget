@@ -10,7 +10,6 @@ if (!$block->getProductId() || !$block->showWidget()) {
     lang="<?= $escaper->escapeHtmlAttr($block->getLanguage()) ?>"
     payment-method="<?= $escaper->escapeHtmlAttr($block->getPaymentMethod()) ?>"
     account-class="<?= $escaper->escapeHtmlAttr($block->getAccountClass()) ?>"
-    custom-styles="<?= $escaper->escapeHtmlAttr($block->getCustomStyles()) ?>"
 ></avarda-payment-widget>
 <script type="text/javascript">
     function initWidget(event) {
@@ -32,6 +31,7 @@ if (!$block->getProductId() || !$block->showWidget()) {
         s.async = true;
         s.dataset.paymentId = paymentId;
         s.dataset.widgetJwt = widgetJwt;
+        s.dataset.customStyles = "<?= $escaper->escapeJs($block->getCustomStyles()) ?>";
         document.head.appendChild(s);
     }
 </script>
