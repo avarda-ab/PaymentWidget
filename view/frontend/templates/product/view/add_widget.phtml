@@ -1,0 +1,27 @@
+<?php
+/** @var $escaper \Magento\Framework\Escaper */
+/** @var $block \Avarda\PaymentWidget\Block\Product\View\PaymentWidget */
+if (!$block->getProductId() || !$block->showWidget()) {
+    return;
+}
+?>
+<avarda-payment-widget
+    price="<?= $escaper->escapeHtmlAttr($block->getProduct()->getPrice()) ?>"
+    lang="<?= $escaper->escapeHtmlAttr($block->getLanguage()) ?>"
+    payment-method="<?= $escaper->escapeHtmlAttr($block->getPaymentMethod()) ?>"
+    account-class="<?= $escaper->escapeHtmlAttr($block->getAccountClass()) ?>"
+></avarda-payment-widget>
+<script type="text/x-magento-init">
+{
+    "avarda-payment-widget": {
+        "Magento_Ui/js/core/app": {
+            "components": {
+                "boughtCampaigns": {
+                    "component": "Avarda_PaymentWidget/js/payment-widget",
+                    "jwtWidgetUrl": "<?= $block->getWidgetUrl() ?>"
+                }
+            }
+        }
+    }
+}
+</script>

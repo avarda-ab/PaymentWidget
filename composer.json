@@ -1,0 +1,26 @@
+{
+    "name": "avarda/module-payment-widget",
+    "version": "1.0.0",
+    "description": "N/A",
+    "type": "magento2-module",
+    "require": {
+        "magento/framework": "*",
+        "magento/module-catalog": "*",
+        "magento/module-store": "*",
+        "magento/module-customer": "*",
+        "magento/module-config": "*",
+        "magento/module-payment": "*"
+    },
+    "suggest": {
+        "avarda/checkout3": "",
+        "avarda/payments": ""
+    },
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "Avarda\\PaymentWidget\\": ""
+        }
+    }
+}

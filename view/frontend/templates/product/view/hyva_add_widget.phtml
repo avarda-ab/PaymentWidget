@@ -1,0 +1,37 @@
+<?php
+/** @var $escaper \Magento\Framework\Escaper */
+/** @var $block \Avarda\PaymentWidget\Block\Product\View\PaymentWidget */
+if (!$block->getProductId() || !$block->showWidget()) {
+    return;
+}
+?>
+<avarda-payment-widget
+    price="<?= $escaper->escapeHtmlAttr($block->getProduct()->getPrice()) ?>>"
+    lang="<?= $escaper->escapeHtmlAttr($block->getLanguage()) ?>"
+    payment-method="<?= $escaper->escapeHtmlAttr($block->getPaymentMethod()) ?>"
+    account-class="<?= $escaper->escapeHtmlAttr($block->getAccountClass()) ?>"
+    custom-styles="<?= $escaper->escapeHtmlAttr($block->getCustomStyles()) ?>"
+></avarda-payment-widget>
+<script type="text/javascript">
+    function initWidget(event) {
+        const sectionData = event.detail.data['avarda-payment-widget-jwt'];
+        if ((!sectionData || typeof sectionData === 'object' && !Object.keys(sectionData).length) || (sectionData.expiredUtc - Math.floor(Date.now() / 1000)) < 0) {
+            hyva.setCookie('mage-cache-sessid', '', -1, true); // remove the cookie
+            window.dispatchEvent(new CustomEvent("reload-customer-section-data")); // reload the data
+        } else {
+            loadWidget(sectionData.paymentId, sectionData.widgetJwt);
+        }
+    }
+    window.addEventListener('private-content-loaded', initWidget);
+
+    function loadWidget(paymentId, widgetJwt) {
+        let s = document.createElement('script');
+        s.src = "<?= $block->getWidgetUrl() ?>";
+        s.type = 'text/javascript';
+        s.crossorigin = 'anonymous';
+        s.async = true;
+        s.dataset.paymentId = paymentId;
+        s.dataset.widgetJwt = widgetJwt;
+        document.head.appendChild(s);
+    }
+</script>
