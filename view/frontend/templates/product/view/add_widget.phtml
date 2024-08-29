@@ -6,6 +6,7 @@ if (!$block->getProductId() || !$block->showWidget()) {
 }
 ?>
 <avarda-payment-widget
+    id="avarda-payment-widget"
     price="<?= $escaper->escapeHtmlAttr($block->getProduct()->getPrice()) ?>"
     lang="<?= $escaper->escapeHtmlAttr($block->getLanguage()) ?>"
     payment-method="<?= $escaper->escapeHtmlAttr($block->getPaymentMethod()) ?>"
