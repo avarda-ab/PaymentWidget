@@ -1,7 +1,7 @@
 <?php
 /** @var $escaper \Magento\Framework\Escaper */
 /** @var $block \Avarda\PaymentWidget\Block\Product\View\PaymentWidget */
-if (!$block->getProductId() || !$block->showWidget()) {
+if (!$block->getProduct() || !$block->showWidget()) {
     return;
 }
 ?>
