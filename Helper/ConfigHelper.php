@@ -23,7 +23,7 @@ class ConfigHelper
     const MODE_PAYMENTS = 'payments';
 
     const PAYMENT_METHOD_LOAN = 'Loan';
-    const PAYMENT_METHOD_DIRECT_INVOICE = 'DirectInvoice';
+    const PAYMENT_METHOD_DIRECT_INVOICE = 'direct-invoice';
 
     protected string $parentModule = '';
 
