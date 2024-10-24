@@ -47,9 +47,9 @@ class ConfigHelper
         $this->flagManager = $flagManager;
         $this->localeResolver = $localeResolver;
 
-        if ($moduleManager->isEnabled('Avarda_Checkout3')) {
+        if ($moduleManager->isEnabled('Avarda_Checkout3') && $this->isCheckoutActive()) {
             $this->parentModule = self::MODE_CHECKOUT;
-        } elseif ($moduleManager->isEnabled('Avarda_Payments')) {
+        } elseif ($moduleManager->isEnabled('Avarda_Payments') && $this->isInvoiceActive()) {
             $this->parentModule = self::MODE_PAYMENTS;
         } else {
             throw new Exception('You must have either avarda/checkout3 or avarda/payments module installed and enabled');
@@ -57,9 +57,25 @@ class ConfigHelper
     }
 
     /**
+     * @return bool
+     */
+    public function isCheckoutActive(): bool
+    {
+        return (bool) $this->getConfigValue('avarda/payment_widget/checkout_active');
+    }
+
+    /**
+     * @return bool
+     */
+    public function isInvoiceActive(): bool
+    {
+        return (bool) $this->getConfigValue('avarda/payment_widget/invoice_active');
+    }
+
+    /**
      * @return string|false
      */
-    public function getMode()
+    public function getMode(): false|string
     {
         if ($this->parentModule == self::MODE_CHECKOUT) {
             return self::MODE_CHECKOUT;
@@ -75,7 +91,7 @@ class ConfigHelper
      *
      * @return bool
      */
-    public function isActive()
+    public function isActive(): bool
     {
         if ($this->getMode() == self::MODE_CHECKOUT) {
             return (bool) $this->getConfigValue('avarda/payment_widget/checkout_active');
@@ -89,7 +105,7 @@ class ConfigHelper
     /**
      * @return bool|null
      */
-    public function getTestMode()
+    public function getTestMode(): ?bool
     {
         if ($this->getMode() == self::MODE_CHECKOUT) {
             return (bool) $this->getConfigValue('payment/avarda_checkout3_checkout/test_mode');
@@ -103,7 +119,7 @@ class ConfigHelper
     /**
      * @return string
      */
-    public function getClientSecret()
+    public function getClientSecret(): string
     {
         $secret = null;
         if ($this->getMode() == self::MODE_CHECKOUT) {
@@ -117,7 +133,7 @@ class ConfigHelper
     /**
      * @return string
      */
-    public function getClientId()
+    public function getClientId(): string
     {
         if ($this->getMode() == self::MODE_CHECKOUT) {
             return $this->getConfigValue('payment/avarda_checkout3_checkout/client_id');
@@ -131,7 +147,7 @@ class ConfigHelper
     /**
      * @return string
      */
-    public function getApiUrl()
+    public function getApiUrl(): string
     {
         if ($this->getTestMode()) {
             return self::TEST_URL;
@@ -142,7 +158,7 @@ class ConfigHelper
     /**
      * @return string
      */
-    public function getTokenUrl()
+    public function getTokenUrl(): string
     {
         return $this->getApiUrl() . self::TOKEN_PATH;
     }
@@ -159,7 +175,7 @@ class ConfigHelper
      * @param $token string
      * @return bool
      */
-    public function saveNewToken(string $token)
+    public function saveNewToken(string $token): bool
     {
         return $this->flagManager->saveFlag(self::KEY_TOKEN_FLAG, $this->encryptor->encrypt($token));
     }
@@ -168,7 +184,7 @@ class ConfigHelper
      * @param $key
      * @return mixed
      */
-    protected function getConfigValue($key)
+    protected function getConfigValue($key): mixed
     {
         return $this->config->getValue($key, ScopeInterface::SCOPE_STORE);
     }
@@ -176,7 +192,7 @@ class ConfigHelper
     /**
      * @return string
      */
-    public function getWidgetJsUrl()
+    public function getWidgetJsUrl(): string
     {
         if ($this->getTestMode()) {
             return self::STAGE_WIDGET_JS_URL;
@@ -195,7 +211,7 @@ class ConfigHelper
     /**
      * @return string
      */
-    public function getPaymentMethod($price)
+    public function getPaymentMethod($price): string
     {
         if ($this->getMode() == self::MODE_CHECKOUT) {
             $threshold = $this->getConfigValue('avarda/payment_widget/checkout_widget_threshold');
@@ -214,7 +230,7 @@ class ConfigHelper
     /**
      * @return string
      */
-    public function getAccountClass($paymentMethod)
+    public function getAccountClass($paymentMethod): string
     {
         if ($paymentMethod == self::PAYMENT_METHOD_LOAN) {
             $suffix = 'loan';
@@ -239,7 +255,7 @@ class ConfigHelper
      *
      * @return string
      */
-    public function getStyles()
+    public function getStyles(): string
     {
         if ($this->getMode() == self::MODE_CHECKOUT) {
             $customCss = $this->getConfigValue('avarda/payment_widget/checkout_custom_css');
