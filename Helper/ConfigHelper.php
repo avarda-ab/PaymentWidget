@@ -49,7 +49,7 @@ class ConfigHelper
 
         if ($moduleManager->isEnabled('Avarda_Checkout3') && $this->isCheckoutActive()) {
             $this->parentModule = self::MODE_CHECKOUT;
-        } elseif ($moduleManager->isEnabled('Avarda_Payments') && $this->isInvoiceActive()) {
+        } elseif ($moduleManager->isEnabled('Avarda_Payments') && $this->isPaymentsActive()) {
             $this->parentModule = self::MODE_PAYMENTS;
         } else {
             throw new Exception('You must have either avarda/checkout3 or avarda/payments module installed and enabled');
@@ -61,15 +61,15 @@ class ConfigHelper
      */
     public function isCheckoutActive(): bool
     {
-        return (bool) $this->getConfigValue('avarda/payment_widget/checkout_active');
+        return (bool) $this->getConfigValue('payment/avarda_checkout3_checkout/active');
     }
 
     /**
      * @return bool
      */
-    public function isInvoiceActive(): bool
+    public function isPaymentsActive(): bool
     {
-        return (bool) $this->getConfigValue('avarda/payment_widget/invoice_active');
+        return (bool) $this->getConfigValue('avarda_payments/api/active');
     }
 
     /**
