@@ -7,6 +7,6 @@
 -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
     <event name="admin_system_config_changed_section_payment">
-        <observer name="avarda_payment_widget_remove_flags" instance="Avarda\PaymentWidget\Observer\ConfigSaveObserver" />
+        <observer name="avarda_payment_widget_remove_flags" instance="Avarda\PaymentWidget\Observer\ConfigSaveObserver"/>
     </event>
 </config>
