@@ -25,7 +25,7 @@ class ConfigHelper
     const MODE_PAYMENTS = 'payments';
 
     const PAYMENT_METHOD_LOAN = 'Loan';
-    const PAYMENT_METHOD_DIRECT_INVOICE = 'DirectInvoice';
+    const PAYMENT_METHOD_DIRECT_INVOICE = 'direct-invoice';
 
     protected string $parentModule = '';
 
@@ -53,9 +53,9 @@ class ConfigHelper
         $this->localeResolver = $localeResolver;
         $this->storeManager = $storeManager;
 
-        if ($moduleManager->isEnabled('Avarda_Checkout3')) {
+        if ($moduleManager->isEnabled('Avarda_Checkout3') && $this->isCheckoutActive()) {
             $this->parentModule = self::MODE_CHECKOUT;
-        } elseif ($moduleManager->isEnabled('Avarda_Payments')) {
+        } elseif ($moduleManager->isEnabled('Avarda_Payments') && $this->isPaymentsActive()) {
             $this->parentModule = self::MODE_PAYMENTS;
         } else {
             throw new Exception('You must have either avarda/checkout3 or avarda/payments module installed and enabled');
@@ -81,6 +81,22 @@ class ConfigHelper
             $this->storeId = $this->storeManager->getStore()->getId();
         }
         return $this->storeId;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isCheckoutActive(): bool
+    {
+        return (bool) $this->getConfigValue('payment/avarda_checkout3_checkout/active');
+    }
+
+    /**
+     * @return bool
+     */
+    public function isPaymentsActive(): bool
+    {
+        return (bool) $this->getConfigValue('avarda_payments/api/active');
     }
 
     /**
@@ -177,7 +193,7 @@ class ConfigHelper
     /**
      * @return string
      */
-    public function getToken(): string
+    public function getToken()
     {
         return $this->encryptor->decrypt($this->flagManager->getFlagData(self::KEY_TOKEN_FLAG . $this->getStoreId()));
     }
