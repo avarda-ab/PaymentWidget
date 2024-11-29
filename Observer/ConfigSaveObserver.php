@@ -10,15 +10,19 @@ use Avarda\PaymentWidget\Helper\ConfigHelper;
 use Magento\Framework\Event\Observer;
 use Magento\Framework\Event\ObserverInterface;
 use Magento\Framework\FlagManager;
+use Magento\Store\Model\StoreManagerInterface;
 
 class ConfigSaveObserver implements ObserverInterface
 {
     protected FlagManager $flagManager;
+    protected StoreManagerInterface $storeManager;
 
     public function __construct(
-        FlagManager $flagManager
+        FlagManager $flagManager,
+        StoreManagerInterface $storeManager,
     ) {
         $this->flagManager = $flagManager;
+        $this->storeManager = $storeManager;
     }
 
     public function execute(Observer $observer)
@@ -39,10 +43,12 @@ class ConfigSaveObserver implements ObserverInterface
                 break;
             }
         }
-        // If api keys or api url is changed remove current api token data
+        // If api keys or test mode is changed, remove current api token data
         if ($hasChanged) {
-            $this->flagManager->deleteFlag(ConfigHelper::KEY_TOKEN_FLAG);
-            $this->flagManager->deleteFlag(ConfigHelper::KEY_TOKEN_FLAG . '_valid');
+            foreach ($this->storeManager->getStores() as $store) {
+                $this->flagManager->deleteFlag(ConfigHelper::KEY_TOKEN_FLAG . $store->getId());
+                $this->flagManager->deleteFlag(ConfigHelper::KEY_TOKEN_FLAG . '_valid' . $store->getId());
+            }
         }
     }
 }

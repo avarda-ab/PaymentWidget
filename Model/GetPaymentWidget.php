@@ -30,7 +30,7 @@ class GetPaymentWidget
      */
     public function execute()
     {
-        $jwtValid = $this->flagManager->getFlagData(self::FLAG_KEY . '_valid');
+        $jwtValid = $this->flagManager->getFlagData(self::FLAG_KEY . '_valid' . $this->configHelper->getStoreId());
         if (!$jwtValid || $jwtValid < time()) {
             try {
                 $this->getNewJwtData();
@@ -39,7 +39,7 @@ class GetPaymentWidget
             }
         }
 
-        return $this->flagManager->getFlagData(self::FLAG_KEY) ?? [];
+        return $this->flagManager->getFlagData(self::FLAG_KEY . $this->configHelper->getStoreId()) ?? [];
     }
 
     /**
@@ -52,8 +52,8 @@ class GetPaymentWidget
         $url = $this->configHelper->getApiUrl() . 'api/paymentwidget/partner/init';
         $headers = $this->avardaClient->buildHeader();
         $response = $this->avardaClient->get($url, $headers);
-        $this->flagManager->saveFlag(self::FLAG_KEY, json_decode($response, true));
+        $this->flagManager->saveFlag(self::FLAG_KEY . $this->configHelper->getStoreId(), json_decode($response, true));
         $responseArray = json_decode($response, true);
-        $this->flagManager->saveFlag(self::FLAG_KEY . '_valid', strtotime($responseArray['expiredUtc']));
+        $this->flagManager->saveFlag(self::FLAG_KEY . '_valid' . $this->configHelper->getStoreId(), strtotime($responseArray['expiredUtc']));
     }
 }

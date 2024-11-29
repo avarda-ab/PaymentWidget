@@ -162,9 +162,8 @@ class AvardaClient
      */
     private function getToken(): string
     {
-        $tokenValid = $this->flagManager->getFlagData(ConfigHelper::KEY_TOKEN_FLAG . '_valid');
+        $tokenValid = $this->flagManager->getFlagData(ConfigHelper::KEY_TOKEN_FLAG . '_valid' . $this->config->getStoreId());
         if (!$tokenValid || $tokenValid < time()) {
-
             $authUrl = $this->config->getTokenUrl();
             $authParam = [
                 'clientId'     => $this->config->getClientId(),
@@ -182,7 +181,7 @@ class AvardaClient
             } elseif (isset($responseArray['error_description'])) {
                 throw new ClientException(__('Authentication error, check avarda credentials'));
             } else {
-                $this->flagManager->saveFlag(ConfigHelper::KEY_TOKEN_FLAG . '_valid', strtotime($responseArray['tokenExpirationUtc']));
+                $this->flagManager->saveFlag(ConfigHelper::KEY_TOKEN_FLAG . '_valid' . $this->config->getStoreId(), strtotime($responseArray['tokenExpirationUtc']));
                 $this->config->saveNewToken($responseArray['token']);
             }
         }
