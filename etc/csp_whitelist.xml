@@ -3,32 +3,48 @@
     <policies>
         <policy id="script-src-elem">
             <values>
-                <value id="avarda-payment-widget" type="host">*.payment-widget.avarda.com</value>
-                <value id="avarda-payment-widget-stage" type="host">*.payment-widget.stage.avarda.com</value>
+                <value id="avarda-payment-widget-1" type="host">payment-widget.avarda.com</value>
+                <value id="avarda-payment-widget-2" type="host">*.payment-widget.avarda.com</value>
+                <value id="avarda-payment-widget-stage-1" type="host">payment-widget.stage.avarda.com</value>
+                <value id="avarda-payment-widget-stage-2" type="host">*.payment-widget.stage.avarda.com</value>
+                <value id="data-uri-scripts" type="host">data:</value>
+                <value id="self-host" type="host">'self'</value>
             </values>
         </policy>
+
         <policy id="script-src">
             <values>
-                <value id="avarda-payment-widget" type="host">*.payment-widget.avarda.com</value>
-                <value id="avarda-payment-widget-stage" type="host">*.payment-widget.stage.avarda.com</value>
+                <value id="avarda-payment-widget-1" type="host">payment-widget.avarda.com</value>
+                <value id="avarda-payment-widget-2" type="host">*.payment-widget.avarda.com</value>
+                <value id="avarda-payment-widget-stage-1" type="host">payment-widget.stage.avarda.com</value>
+                <value id="avarda-payment-widget-stage-2" type="host">*.payment-widget.stage.avarda.com</value>
             </values>
         </policy>
+
         <policy id="connect-src">
             <values>
-                <value id="avarda-payment-widget" type="host">*.payment-widget.avarda.com</value>
-                <value id="avarda-payment-widget-stage" type="host">*.payment-widget.stage.avarda.com</value>
+                <value id="avarda-payment-widget-1" type="host">payment-widget.avarda.com</value>
+                <value id="avarda-payment-widget-2" type="host">*.payment-widget.avarda.com</value>
+                <value id="avarda-payment-widget-stage-1" type="host">payment-widget.stage.avarda.com</value>
+                <value id="avarda-payment-widget-stage-2" type="host">*.payment-widget.stage.avarda.com</value>
             </values>
         </policy>
+
         <policy id="font-src">
             <values>
-                <value id="avarda-payment-widget" type="host">*.payment-widget.avarda.com</value>
-                <value id="avarda-payment-widget-stage" type="host">*.payment-widget.stage.avarda.com</value>
+                <value id="avarda-payment-widget-1" type="host">payment-widget.avarda.com</value>
+                <value id="avarda-payment-widget-2" type="host">*.payment-widget.avarda.com</value>
+                <value id="avarda-payment-widget-stage-1" type="host">payment-widget.stage.avarda.com</value>
+                <value id="avarda-payment-widget-stage-2" type="host">*.payment-widget.stage.avarda.com</value>
             </values>
         </policy>
+
         <policy id="img-src">
             <values>
-                <value id="avarda-payment-widget" type="host">*.payment-widget.avarda.com</value>
-                <value id="avarda-payment-widget-stage" type="host">*.payment-widget.stage.avarda.com</value>
+                <value id="avarda-payment-widget-1" type="host">payment-widget.avarda.com</value>
+                <value id="avarda-payment-widget-2" type="host">*.payment-widget.avarda.com</value>
+                <value id="avarda-payment-widget-stage-1" type="host">payment-widget.stage.avarda.com</value>
+                <value id="avarda-payment-widget-stage-2" type="host">*.payment-widget.stage.avarda.com</value>
             </values>
         </policy>
     </policies>
