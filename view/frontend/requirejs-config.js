@@ -6,6 +6,9 @@ var config = {
             },
             'Magento_ConfigurableProduct/js/configurable': {
                 'Avarda_PaymentWidget/js/configurable-payment-widget-price-update': true
+            },
+            'Magento_Bundle/js/price-bundle': {
+                'Avarda_PaymentWidget/js/bundle-payment-widget-price-update': true
             }
         }
     }
